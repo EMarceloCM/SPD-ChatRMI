@@ -28,7 +28,7 @@ A aplicação segue uma arquitetura cliente-servidor utilizando Java RMI. Aqui e
 
 1. **Clone o repositório**
 ```bash 
-  git clone ("ainda não criei")
+  git clone https://github.com/EMarceloCM/SPD-ChatRMI.git
 ```
 ```bash
   cd SPD-ChatRMI
