@@ -7,8 +7,8 @@
 - **Mensagens em tempo real**: Converse com outros usuários em tempo real.
 - **Mensagens públicas e privadas**: Envie mensagens para todos os usuários ou em privado para um usuário específico.
 - **Nicknames de usuário**: Escolha um nickname após realizar a conexão.
-- **Entre/Saia do Chat**: Conecte ou desconecte do servidor de chat a qualquer momento.
-
+- **Entre/Saia do chat**: Conecte ou desconecte do servidor de chat a qualquer momento.
+- **Interface gráfica**: Sistema consta com interface intuitiva e de simples utilização.
 ## Arquitetura
 
 A aplicação segue uma arquitetura cliente-servidor utilizando Java RMI. Aqui está uma breve visão geral:
