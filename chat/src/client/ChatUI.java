@@ -196,7 +196,7 @@ public class ChatUI extends JFrame implements ActionListener {
                 if (name.length() != 0) {
                     frame.setTitle("Nickname: " + name + " -> sala de chat distribuido.");
                     textField.setText("");
-                    textArea.append("usuario : " + name + " conectado a...\n");
+                    textArea.append("usuario: " + name + " conectado a...\n");
                     getConnected(name);
                     if (!chatClient.connectionProblem) {
                         startButton.setEnabled(false);
@@ -211,13 +211,13 @@ public class ChatUI extends JFrame implements ActionListener {
                 message = textField.getText();
                 textField.setText("");
                 sendMessage(message);
-                System.out.println("mensagem em curso : " + message);
+                System.out.println("mensagem em curso: " + message);
             }
 
             if (e.getSource() == privateMsgButton) {
                 int[] privateList = list.getSelectedIndices();
                 for (int i = 0; i < privateList.length; i++) {
-                    System.out.println("indice selecionado :" + privateList[i]);
+                    System.out.println("indice selecionado: " + privateList[i]);
                 }
                 message = textField.getText();
                 textField.setText("");
@@ -234,7 +234,7 @@ public class ChatUI extends JFrame implements ActionListener {
     }
 
     private void sendPrivate(int[] privateList) throws RemoteException {
-        String privateMessage = "\n[Privado de " + name + "] :" + message + "\n";
+        String privateMessage = "\n[Privado de " + name + "] : " + message + "\n";
         chatClient.IServer.privateDM(privateList, privateMessage);
     }
 
