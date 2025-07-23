@@ -29,13 +29,13 @@ public class ChatClient extends UnicastRemoteObject implements IChatClient {
         String[] details = {name, host, clientService};
 
         try {
-            System.setProperty("java.rmi.server.hostname", this.host); // só por garantia
+            //System.setProperty("java.rmi.server.hostname", this.host); // só por garantia
             Naming.rebind("rmi://" + host + ":" + 1099 + "/" + clientService, this);
             IServer = ( IChatServer )Naming.lookup("rmi://" + host + ":" + 1099 + "/" + service);	
         } 
         catch (ConnectException  e) {
             JOptionPane.showMessageDialog(
-                    chatUI.frame, "O servidor parece nao esta disponivel. Por favor, tente novamente mais tarde.",
+                    chatUI.frame, "O servidor parece nao estar disponivel. Por favor, tente novamente mais tarde.",
                     "Problema de conexao.", JOptionPane.ERROR_MESSAGE);
             connectionProblem = true;
             e.printStackTrace();

@@ -4,7 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.RemoteRef;
 
-public interface IChatServer extends  Remote {
+public interface IChatServer extends Remote {
   	public void updateChat(String username, String chatMessage)throws RemoteException;
 	
 	public void passIdentity(RemoteRef ref)throws RemoteException;
