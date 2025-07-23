@@ -11,7 +11,7 @@ import server.IChatServer;
 
 public class ChatClient extends UnicastRemoteObject implements IChatClient {
     ChatUI chatUI; // interface da aplicação
-    private String host = "192.168.3.200";
+    private String host = "192.168.4.7";
     private String service = "GroupChatService";
     private String clientService;
     private String name;
