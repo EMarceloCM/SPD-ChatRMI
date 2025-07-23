@@ -21,7 +21,6 @@ public class ChatServer extends UnicastRemoteObject implements IChatServer {
     }
 
     public static void main(String[] args) {
-        startRegistryRMI();  
         String host = "192.168.4.7";
         String service = "GroupChatService";
 
@@ -29,6 +28,9 @@ public class ChatServer extends UnicastRemoteObject implements IChatServer {
             host = args[0];
             service = args[1];
         }
+
+        System.setProperty("java.rmi.server.hostname", host);
+        startRegistryRMI();
 
         try {
             IChatServer server = new ChatServer(); 					             // cria uma instância do servidor de chat
