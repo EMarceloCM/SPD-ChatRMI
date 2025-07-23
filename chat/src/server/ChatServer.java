@@ -31,8 +31,8 @@ public class ChatServer extends UnicastRemoteObject implements IChatServer {
         }
 
         try {
-            IChatServer server = new ChatServer(); 					// cria uma instância do servidor de chat
-            Naming.rebind("rmi://" + host + "/" + service, server); // registra o servidor no registry RMI
+            IChatServer server = new ChatServer(); 					             // cria uma instância do servidor de chat
+            Naming.rebind("rmi://" + host + ":" + 1099 + "/" + service, server); // registra o servidor no registry RMI
             System.out.println("servirdor RMI aguardando conexoes...");
         } catch (Exception e) {
             System.out.println("Erro! Problema ao iniciar o servidor.");

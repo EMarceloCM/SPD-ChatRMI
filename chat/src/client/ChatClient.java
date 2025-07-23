@@ -29,8 +29,8 @@ public class ChatClient extends UnicastRemoteObject implements IChatClient {
         String[] details = {name, host, clientService};
 
         try {
-            Naming.rebind("rmi://" + host + "/" + clientService, this);
-            IServer = ( IChatServer )Naming.lookup("rmi://" + host + "/" + service);	
+            Naming.rebind("rmi://" + host + ":" + 1099 + "/" + clientService, this);
+            IServer = ( IChatServer )Naming.lookup("rmi://" + host + ":" + 1099 + "/" + service);	
         } 
         catch (ConnectException  e) {
             JOptionPane.showMessageDialog(
