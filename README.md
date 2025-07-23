@@ -41,7 +41,7 @@ cd src
 javac -d bin server/*.java client/*.java
 ```
 
-4. **Rode o servidor** 
+3. **Rode o servidor** 
 ```bash
 java -cp bin server.ChatServer
 ``` 
@@ -49,4 +49,31 @@ java -cp bin server.ChatServer
 4. **Rode o cliente**  
 ```bash
 java -cp bin client.ChatUI
+```
+
+### Nota
+#### Para utilizar um nome fixo de host ao invés do ip da máquina, é necessário seguir os seguintes passos:
+
+1. **Editar o arquivo hosts em cada máquina (servidor e clientes)**
+```bash
+Windows: C:\Windows\System32\drivers\etc\hosts
+Linux/macOS: /etc/hosts
+```
+Adicione uma linha apontando o nome fixo para o IP atual do servidor, por exemplo:
+```bash
+192.168.0.105   chat.local
+```
+
+2. **No servidor, configure o RMI para usar esse nome**
+```bash
+java -Djava.rmi.server.hostname=chat.local -cp bin server.ChatServer
+```
+No seu código, registre com:
+```bash
+Naming.rebind("rmi://chat.local/GroupChatService", servidor);
+```
+
+3. **No(s) cliente(s), faça o lookup usando chat.local (ou o nome que tiver dado)**
+```bash
+IChatServer srv = (IChatServer) Naming.lookup("rmi://chat.local/GroupChatService");
 ```

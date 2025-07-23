@@ -22,7 +22,7 @@ public class ChatServer extends UnicastRemoteObject implements IChatServer {
 
     public static void main(String[] args) {
         startRegistryRMI();  
-        String host = "localhost";
+        String host = "192.168.3.200";
         String service = "GroupChatService";
 
         if (args.length == 2) {
