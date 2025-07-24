@@ -25,9 +25,6 @@ public class ChatClient extends UnicastRemoteObject implements IChatClient {
         try {
             connectionProblem = false;
 
-            // Configura o hostname para o IP do cliente
-            System.setProperty("java.rmi.server.hostname", "192.168.3.200");
-
             // Conecta ao servidor RMI
             server = (IChatServer) Naming.lookup("rmi://" + serverHost + "/" + serviceName);
 
