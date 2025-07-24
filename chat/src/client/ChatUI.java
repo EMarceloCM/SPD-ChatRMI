@@ -66,7 +66,7 @@ public class ChatUI extends JFrame implements ActionListener {
                 if (chatClient != null) {
                     try {
                         sendMessage("Ate logo.");
-                        chatClient.IServer.quitChat(name);
+                        chatClient.server.quitChat(name);
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
@@ -230,12 +230,12 @@ public class ChatUI extends JFrame implements ActionListener {
     }
 
     private void sendMessage(String message) throws RemoteException {
-        chatClient.IServer.updateChat(name, message);
+        chatClient.server.updateChat(name, message);
     }
 
     private void sendPrivate(int[] privateList) throws RemoteException {
         String privateMessage = "\n[Privado de " + name + "] : " + message + "\n";
-        chatClient.IServer.privateDM(privateList, privateMessage);
+        chatClient.server.privateDM(privateList, privateMessage);
     }
 
     private void getConnected(String userName) throws RemoteException {

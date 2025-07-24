@@ -1,76 +1,61 @@
 package client;
 
-import java.net.MalformedURLException;
-import java.rmi.ConnectException;
 import java.rmi.Naming;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import javax.swing.JOptionPane;
 import server.IChatServer;
 
 public class ChatClient extends UnicastRemoteObject implements IChatClient {
-    ChatUI chatUI; // interface da aplicação
-    private String host = "192.168.4.7";
-    private String service = "GroupChatService";
-    private String clientService;
-    private String name;
-    protected IChatServer IServer;
+    private static final long serialVersionUID = 1L;
+    private ChatUI chatUI;
+    private String serverHost = "192.168.4.7";
+    private String serviceName = "GroupChatService";
+    private String username;
+    protected IChatServer server;
     protected boolean connectionProblem = false;
 
     public ChatClient(ChatUI chatUI, String username) throws RemoteException {
-        super();
+        super(); // exporta o stub do cliente
         this.chatUI = chatUI;
-        this.name = username;
-        this.clientService = "ClientListenService_" + username;
+        this.username = username;
     }
 
     public void startClient() throws RemoteException {
-        String[] details = {name, host, clientService};
-
         try {
+            connectionProblem = false;
+
+            // Configura o hostname para o IP do cliente
             System.setProperty("java.rmi.server.hostname", "192.168.3.200");
-            Naming.rebind("rmi://" + "192.168.3.200" + "/" + clientService, this);
-            IServer = (IChatServer) Naming.lookup("rmi://" + host + "/" + service);	
-        }
-        catch (ConnectException  e) {
-            JOptionPane.showMessageDialog(
-                    chatUI.frame, "O servidor parece nao estar disponivel. Por favor, tente novamente mais tarde.",
-                    "Problema de conexao.", JOptionPane.ERROR_MESSAGE);
-            connectionProblem = true;
-            e.printStackTrace();
-        }
-        catch(NotBoundException | MalformedURLException me){
-            connectionProblem = true;
-            me.printStackTrace();
-        }
-        if(!connectionProblem){
-            registerWithServer(details);
-        }	
-        System.out.println("O servidor RMI esta ouvindo...\n");
-    }
 
-    public void registerWithServer(String[] details) {
-        try {
-            IServer.passIdentity(this.ref);
-            IServer.registerListener(details);
+            // Conecta ao servidor RMI
+            server = (IChatServer) Naming.lookup("rmi://" + serverHost + "/" + serviceName);
+
+            // Registra este stub diretamente no servidor
+            server.registerListener(this, username);
+
+            System.out.println("Registrado no servidor com sucesso. Aguardando mensagens...");
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(
+                chatUI.frame,
+                "Não foi possível conectar ao servidor de chat. Por favor, tente novamente mais tarde.",
+                "Erro de conexão",
+                JOptionPane.ERROR_MESSAGE
+            );
             e.printStackTrace();
+            connectionProblem = true;
         }
     }
 
     @Override
     public void messageFromServer(String message) throws RemoteException {
-        System.out.println(message);
         chatUI.textArea.append(message);
         chatUI.textArea.setCaretPosition(chatUI.textArea.getDocument().getLength());
     }
 
     @Override
     public void updateUserList(String[] currentUsers) throws RemoteException {
-        if (currentUsers.length < 2) {
-            chatUI.privateMsgButton.setEnabled(false);            
-        }
+        chatUI.privateMsgButton.setEnabled(currentUsers.length > 1);
         chatUI.userPanel.remove(chatUI.clientPanel);
         chatUI.setClientPanel(currentUsers);
         chatUI.clientPanel.repaint();
