@@ -21,7 +21,7 @@ public class ChatServer extends UnicastRemoteObject implements IChatServer {
     }
 
     public static void main(String[] args) {
-        String host = "192.168.4.7";
+        String host = "172.25.1.230";
         String service = "GroupChatService";
 
         if (args.length == 2) {
@@ -33,8 +33,8 @@ public class ChatServer extends UnicastRemoteObject implements IChatServer {
         startRegistryRMI();
 
         try {
-            IChatServer server = new ChatServer(); 					             // cria uma instância do servidor de chat
-            Naming.rebind("rmi://" + host + ":" + 1099 + "/" + service, server); // registra o servidor no registry RMI
+            IChatServer server = new ChatServer(); 					// cria uma instância do servidor de chat
+            Naming.rebind("rmi://" + host + "/" + service, server); // registra o servidor no registry RMI
             System.out.println("servirdor RMI aguardando conexoes...");
         } catch (Exception e) {
             System.out.println("Erro! Problema ao iniciar o servidor.");
