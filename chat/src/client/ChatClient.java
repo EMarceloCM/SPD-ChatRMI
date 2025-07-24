@@ -30,7 +30,7 @@ public class ChatClient extends UnicastRemoteObject implements IChatClient {
 
         try {
             System.setProperty("java.rmi.server.hostname", "192.168.3.200");
-            Naming.rebind("rmi://" + host + "/" + clientService, this);
+            Naming.rebind("rmi://" + "192.168.3.200" + "/" + clientService, this);
             IServer = (IChatServer) Naming.lookup("rmi://" + host + "/" + service);	
         }
         catch (ConnectException  e) {
