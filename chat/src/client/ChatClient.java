@@ -11,7 +11,7 @@ import server.IChatServer;
 
 public class ChatClient extends UnicastRemoteObject implements IChatClient {
     ChatUI chatUI; // interface da aplicação
-    private String host = "172.25.1.230";
+    private String host = "192.168.4.7";
     private String service = "GroupChatService";
     private String clientService;
     private String name;
@@ -29,7 +29,7 @@ public class ChatClient extends UnicastRemoteObject implements IChatClient {
         String[] details = {name, host, clientService};
 
         try {
-            // System.setProperty("java.rmi.server.hostname", this.host); // só por garantia
+            System.setProperty("java.rmi.server.hostname", this.host); // só por garantia
             Naming.rebind("rmi://" + host + "/" + clientService, this);
             IServer = (IChatServer) Naming.lookup("rmi://" + host + "/" + service);	
         } 

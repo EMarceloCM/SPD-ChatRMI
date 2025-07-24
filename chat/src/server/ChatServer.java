@@ -21,7 +21,7 @@ public class ChatServer extends UnicastRemoteObject implements IChatServer {
     }
 
     public static void main(String[] args) {
-        String host = "172.25.1.230";
+        String host = "192.168.4.7";
         String service = "GroupChatService";
 
         if (args.length == 2) {
