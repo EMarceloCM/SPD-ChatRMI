@@ -76,3 +76,14 @@ Naming.rebind("rmi://chat.local/GroupChatService", servidor);
 ```bash
 IChatServer srv = (IChatServer) Naming.lookup("rmi://chat.local/GroupChatService");
 ```
+### Requisitos
+
+1. ## Rede local estável e endereço fixo para o servidor
+2. ## Login e senha corporativos para evitar usuários anônimos
+3. ## Criptografia de tráfego: Use SSL/TLS nos sockets RMI (via SslRMIClientSocketFactory e SslRMIServerSocketFactory) para proteger mensagens em trânsito.
+4. ## Autorização e permissões
+5. ## Proteção contra ataques internos
+6. ## Persistencia de mensagens
+7. ## Servidor redundante: Mecanismo de failover (servidor secundário ou cluster) para não ficar offline em caso de falha.
+8. ## Suporte a chat privado
+9. ## Suporte a envio de arquivos
