@@ -7,12 +7,12 @@ import javax.swing.JOptionPane;
 import server.IChatServer;
 
 public class ChatClient extends UnicastRemoteObject implements IChatClient {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L; // Identificador único para a serialização
     private ChatUI chatUI;
     private String serverHost = "192.168.4.7";
     private String serviceName = "GroupChatService";
     private String username;
-    protected IChatServer server;
+    protected IChatServer server; // Referência ao servidor RMI
     protected boolean connectionProblem = false;
 
     public ChatClient(ChatUI chatUI, String username) throws RemoteException {
@@ -47,15 +47,15 @@ public class ChatClient extends UnicastRemoteObject implements IChatClient {
     @Override
     public void messageFromServer(String message) throws RemoteException {
         chatUI.textArea.append(message);
-        chatUI.textArea.setCaretPosition(chatUI.textArea.getDocument().getLength());
+        chatUI.textArea.setCaretPosition(chatUI.textArea.getDocument().getLength()); // rolar para o final
     }
 
     @Override
     public void updateUserList(String[] currentUsers) throws RemoteException {
         chatUI.privateMsgButton.setEnabled(currentUsers.length > 1);
         chatUI.userPanel.remove(chatUI.clientPanel);
-        chatUI.setClientPanel(currentUsers);
+        chatUI.setClientPanel(currentUsers); // Atualiza o painel de clientes com a nova lista de usuários
         chatUI.clientPanel.repaint();
-        chatUI.clientPanel.revalidate();
+        chatUI.clientPanel.revalidate(); // Revalida o layout do painel
     }
 }

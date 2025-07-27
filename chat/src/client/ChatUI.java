@@ -35,10 +35,10 @@ public class ChatUI extends JFrame implements ActionListener {
     private JTextField textField;
     private String name, message;
     private Font meiryoFont = new Font("Meiryo", Font.PLAIN, 14); // fonte japonesa
-    private Border blankBorder = BorderFactory.createEmptyBorder(10, 10, 20, 10);
+    private Border blankBorder = BorderFactory.createEmptyBorder(10, 10, 20, 10); // borda vazia para o painel
     private ChatClient chatClient;
-    private JList<String> list;
-    private DefaultListModel<String> listModel;
+    private JList<String> list; // Lista de usuários conectados
+    private DefaultListModel<String> listModel; // Modelo de lista para a JList
     protected JTextArea textArea, userArea;
     protected JFrame frame;
     protected JButton privateMsgButton, startButton, sendButton;
@@ -47,6 +47,8 @@ public class ChatUI extends JFrame implements ActionListener {
     public static void main(String args[]) {
         try {
             for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                // Verifica o tema do LookAndFeel para aplicar
+                // o tema Nimbus se estiver disponível
                 if ("Nimbus".equals(info.getName())) {
                     UIManager.setLookAndFeel(info.getClassName());
                     break;
@@ -60,6 +62,7 @@ public class ChatUI extends JFrame implements ActionListener {
 
     public ChatUI() {
         frame = new JFrame("Sala de conversacao.");
+        // Configurações da janela
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -75,6 +78,7 @@ public class ChatUI extends JFrame implements ActionListener {
             }
         });
 
+        // Configura o layout e adiciona os componentes
         Container c = getContentPane();
         JPanel outerPanel = new JPanel(new BorderLayout());
 
@@ -120,6 +124,7 @@ public class ChatUI extends JFrame implements ActionListener {
         return inputPanel;
     }
 
+    // Método para obter o painel de usuários
     public JPanel getUsersPanel() {
         userPanel = new JPanel(new BorderLayout());
         String userStr = "Usuarios";
@@ -138,6 +143,8 @@ public class ChatUI extends JFrame implements ActionListener {
         return userPanel;
     }
 
+    // Método para definir o painel de clientes
+    // Recebe um array de strings com os nomes dos clientes conectados
     public void setClientPanel(String[] currClients) {
         clientPanel = new JPanel(new BorderLayout());
         listModel = new DefaultListModel<String>();
@@ -188,9 +195,10 @@ public class ChatUI extends JFrame implements ActionListener {
         return buttonPanel;
     }
 
-    @Override
+    @Override // Método para lidar com eventos de ação
     public void actionPerformed(ActionEvent e) {
         try {
+            // Verifica se o botão de iniciar foi pressionado
             if (e.getSource() == startButton) {
                 name = textField.getText();
                 if (name.length() != 0) {
@@ -207,6 +215,7 @@ public class ChatUI extends JFrame implements ActionListener {
                 }
             }
 
+            // Verifica se o botão de enviar ou mensagem privada foi pressionado
             if (e.getSource() == sendButton) {
                 message = textField.getText();
                 textField.setText("");
@@ -214,6 +223,7 @@ public class ChatUI extends JFrame implements ActionListener {
                 System.out.println("mensagem em curso: " + message);
             }
 
+            // Verifica se o botão de mensagem privada foi pressionado
             if (e.getSource() == privateMsgButton) {
                 int[] privateList = list.getSelectedIndices();
                 for (int i = 0; i < privateList.length; i++) {
@@ -230,16 +240,19 @@ public class ChatUI extends JFrame implements ActionListener {
     }
 
     private void sendMessage(String message) throws RemoteException {
-        chatClient.server.updateChat(name, message);
+        chatClient.server.updateChat(name, message); // Envia a mensagem para o servidor
     }
 
     private void sendPrivate(int[] privateList) throws RemoteException {
         String privateMessage = "\n[Privado de " + name + "] : " + message + "\n";
-        chatClient.server.privateDM(privateList, privateMessage);
+        chatClient.server.privateDM(privateList, privateMessage); // Envia a mensagem privada para o servidor
     }
 
+    // Método para conectar o cliente ao servidor
     private void getConnected(String userName) throws RemoteException {
+        // Limpa espaços e caracteres especiais do nome de usuário
         String cleanedUserName = userName.replaceAll("\\s+", "_");
+        // Remove caracteres não alfanuméricos, substituindo-os por "_"
         cleanedUserName = cleanedUserName.replaceAll("\\W+", "_");
         try {
             chatClient = new ChatClient(this, cleanedUserName);
@@ -259,13 +272,14 @@ public class ChatUI extends JFrame implements ActionListener {
     }
 }
 
+// Classe para renderizar os itens da lista de usuários
 class UserListCellRenderer extends DefaultListCellRenderer {
     private static final long serialVersionUID = 1L;
     private static final Color DARK_GREEN = new Color(0, 100, 0);
     private static final Color RED = new Color(255, 0, 0);
     private static final int DOT_SIZE = 10;
 
-    @Override
+    @Override // Método para renderizar cada célula da lista
     public Component getListCellRendererComponent(
         JList<?> list,
         Object value,
@@ -281,7 +295,7 @@ class UserListCellRenderer extends DefaultListCellRenderer {
         return label;
     }
 
-    @Override
+    @Override // Método para pintar o componente da lista
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (getText().equals("Nenhum usuário")) {

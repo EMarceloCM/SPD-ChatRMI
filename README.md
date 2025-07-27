@@ -37,18 +37,17 @@ A aplicação segue uma arquitetura cliente-servidor utilizando Java RMI. Aqui e
 2. **Compile o projeto**
 ```bash
 cd chat
-cd src
-javac -d bin server/*.java client/*.java
+javac -d . src/server/*.java src/client/*.java
 ```
 
 3. **Rode o servidor** 
 ```bash
-java -cp bin server.ChatServer
+java -cp . server.ChatServer
 ``` 
 
 4. **Rode o cliente**  
 ```bash
-java -cp bin client.ChatUI
+java -cp . client.ChatUI
 ```
 
 ### Nota
